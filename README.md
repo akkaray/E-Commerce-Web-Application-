@@ -2,7 +2,8 @@
 
 *Ashely,Yashaswini(Group member name)
 *Use cases
-**![Relational Schema](relationalschema.png)
+![RelationalSchema](Schema.png)
+
 
 
  
