@@ -11,7 +11,7 @@
   <li>Fourth item</li>
 </ol>
 
-![RelationalSchema](schema.png)
+![RelationalSchema](Schema.png)
 
 
  
