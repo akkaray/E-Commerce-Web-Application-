@@ -10,7 +10,7 @@
   <li>Narration:An e-commerce application to purchase clothing</li>
   <li>Fourth item</li>
 </ol>
-![Relational Schema](relationalschema.png)
+![RelationalSchema](Schema.png)
 
 
  
