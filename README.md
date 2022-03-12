@@ -7,7 +7,7 @@
 		<li>Buying</li>
 		<li>Searching</li>
 	</ol>	
-  <li>Narration:An e-commerce application to purchase clothing</li>
+  <li>Narration:An e-commerce application to purchase clothing and search for products</li>
   <li>Fourth item</li>
 </ol>
 
