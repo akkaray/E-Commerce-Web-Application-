@@ -1,0 +1,21 @@
+<html>
+    <head>
+      
+      <title>Login</title>
+
+	  <link rel="stylesheet" type="text/css" href="style.css" />
+	  
+    </head>
+    <body>
+        <div>
+		<div class="larger1">Login</div>
+        {{ msg }}<br>
+		<form action="/login" method="POST">
+			Username<br>
+			<input type="text" name="username" /><br><br>
+			Password<br>
+			<input type="password" name="password" /><br>
+			<input type="submit" value="Login"/>
+		</form>
+    </body>
+</html>

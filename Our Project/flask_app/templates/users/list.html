@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <div>
+				
+				<a href="users?id=add">adduser</a><br>
+				{% for row in table %}
+				<a href="users?id={{ row.id }}">{{ row.email }}</a> 
+				<a href="users?task=delete&id={{ row.id }}">delete</a><br>
+				{% endfor %}
+			</div>
+{% endblock %}

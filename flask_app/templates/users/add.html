@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <div>
+			
+      <form action='/users?task=add' method='post'>
+          First Name:<input type='text' name='fname' /> <br/>
+          Last Name:<input type='text' name='lname' /> <br/>
+          Email:<input type='text' name='email' /> <br/>
+          Password:<input type='password' name='pw' /> <br/>
+          Type: 
+          <select name='type'>
+          <option value = 'customer'> Customter </option>
+           <option value = 'employee'> Employee </option>
+
+           </select> <br/>
+          <input type='submit' value = 'save'/>
+        </form>
+			</div>
+{% endblock %}
