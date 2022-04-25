@@ -10,10 +10,24 @@
 		<li>Employee</li>
 		<li>Employee use cases:Add or delete a product, Can change the price for clothing</li>
 	</ol>
-username  		|  password  | type </br>
--------------	| -----------| ------</br>
-abc@gmail.com   | 123        | employee</br>
-jim@sur.com  	| 1234       | customer
+	<table>
+    <tr>
+        <th>username</th>
+        <th>password</th>
+        <th>type</th>
+    </tr>
+    <tr>
+        <td>abc@gmail.com</td>
+        <td>123</td>
+        <td>employee</td>
+    </tr>
+    <tr>
+        <td>jim@sur.com	</td>
+        <td>1234</td>
+        <td>customer</td>
+    </tr>
+	</table>
+	
 
 ![RelationalSchema](Documentation/SchemaLatest.png)
 
