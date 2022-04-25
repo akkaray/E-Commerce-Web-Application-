@@ -3,19 +3,23 @@
       
       <title>Login</title>
 
-	  <link rel="stylesheet" type="text/css" href="style.css" />
+	  <link rel="stylesheet" href="login.css" />
 	  
     </head>
     <body>
-        <div>
-		<div class="larger1">Login</div>
-        {{ msg }}<br>
+        <div class="bg-img">
+		<form action="/action_page.php" class="container">
+		  <h1>Login</h1>
+        <label for="email"><b>{{ msg }}</b></label><br>
+		
 		<form action="/login" method="POST">
-			Username<br>
-			<input type="text" name="username" /><br><br>
-			Password<br>
-			<input type="password" name="password" /><br>
-			<input type="submit" value="Login"/>
+		<label for="email"><b>Username</b></label>
+		<input type="text" placeholder="Enter Username" name="username" /><br>
+		<label for="pw"><b>Password</b></label>
+		<input type="password" placeholder="Enter Password" name="pw" required>
+		<input class="btn" type="submit" value="Login"/>
 		</form>
+		</div>
     </body>
 </html>
+

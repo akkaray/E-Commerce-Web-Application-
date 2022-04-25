@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <div>
+				{{ object.data[0].id }}
+				
+			{% for error in object.errors %}
+			{{ error }}<br/>
+		{% endfor %}
+		
+      <form action='/schedule?task=update&id={{ object.data[0].id }}' method='post'>
+		  
+          EventStartTime:<input type='datetime-local' name='EventStartTime' value= '{{ object.data[0].EventStartTime}}' /> <br/>
+		  EventEndTime:<input type='datetime-local' name='EventEndTime' value= '{{ object.data[0].EventEndTime }}' /> <br/>
+		  uid:
+		    <select name='uid'>
+			{% for user in object.users %}
+		      <option 
+		  {%if object.data[0].uid == user.id %}
+			 selected = 'true' 
+		  {% endif %}
+		  value = '{{ user.id }}'> {{ user.fname}} {{ user.lname}}  {{ user.email}} </option>
+		{% endfor %}
+		</select> <br/>
+		
+          <input type='submit' value = 'save'/>
+        </form>
+			</div>
+{% endblock %}

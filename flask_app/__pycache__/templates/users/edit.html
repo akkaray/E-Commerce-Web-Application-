@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <div>
+				{{ object[0].id }}
+      <form action='/users?task=update&id={{ object[0].id }}' method='post'>
+          First Name:<input type='text' name='fname' value= '{{ object[0].fname }}' /> <br/>
+          Last Name:<input type='text' name='lname' value= '{{ object[0].lname }}' /> <br/>
+          Email:<input type='text' name='email' value= '{{ object[0].email }}' /> <br/>
+		  Password:<input type='password' name='pw'/> <br/>
+		  Retype Password:<input type='password' name='pw2'/> <br/>
+		  Type: 
+          <select name='type'>
+		  <option
+		  {%if object[0].type == 'customer' %}
+			 selected = 'true' 
+          {% endif %}
+		  value = 'customer'> Customer </option>
+		  <option
+		  {%if object[0].type == 'employee' %}
+			 selected = 'true' 
+          {% endif %}
+		  value = 'employee'> Employee </option>
+          </select> <br/>
+          <input type='submit' value='save' />
+        </form>
+			</div>
+{% endblock %}

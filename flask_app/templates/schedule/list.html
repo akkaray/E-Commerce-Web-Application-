@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <div>
+				
+				<a href="schedule?id=add"> Add Schedule </a><br>
+				{% for row in table.data %}
+				<a href="schedule?id={{ row.id }}">  Edit The List - {{EventStartTime}}</a>                                                    
+				<a href="schedule?task=delete&id={{ row.id }}">delete</a><br>
+				{% endfor %}
+			</div>
+{% endblock %}

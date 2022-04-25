@@ -4,7 +4,7 @@
             <div>
 				
 				<a href="users?id=add">adduser</a><br>
-				{% for row in table %}
+				{% for row in table.data %}
 				<a href="users?id={{ row.id }}">{{ row.email }}</a> 
 				<a href="users?task=delete&id={{ row.id }}">delete</a><br>
 				{% endfor %}

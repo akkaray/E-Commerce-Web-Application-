@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <div>
+				{{ object.data[0].id }}
+			{% for error in object.errors %}
+			{{ error }}<br/>
+		{% endfor %}
+
+				
+      <form action='/addresses?task=update&id={{ object.data[0].id }}' method='post'>
+            State Name:<input type='text' name='state' value= '{{ object.data[0].state }}' /> <br/>
+          City Name:<input type='text' name='city' value= '{{ object.data[0].city }}' /> <br/>
+          Street:<input type='text' name='street' value= '{{ object.data[0].street }}' /> <br/>
+		  Zipcode:<input type='text' name='zip' value= '{{ object.data[0].zip }}'/> <br/>
+          User: 
+			<select name='uid'>
+			{% for user in object.users %}
+			  <option
+		  {%if object.data[0].uid == user.id %}
+			 selected = 'true' 
+          {% endif %}
+		  value = '{{ user.id }}'> {{ user.fname}} ({{ user.email}}) </option>
+			
+		{% endfor %}
+		</select> <br/>
+          <!--<select name='uid'>
+		  <option
+		  {%if object.data[0].type == 'customer' %}
+			 selected = 'true' 
+          {% endif %}
+		  value = 'customer'> Customer </option>
+		  <option
+		  {%if object.data[0].type == 'employee' %}
+			 selected = 'true' 
+          {% endif %}
+		  value = 'employee'> Employee </option>
+          </select> <br/>-->
+          
+          <input type='submit' value='save' />
+        </form>
+			</div>
+{% endblock %}

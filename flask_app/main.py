@@ -5,6 +5,8 @@ from flask_session import Session
 from datetime import timedelta
 import time
 from users import users
+from products import products
+from transactions import transactions
 
 app = Flask(__name__,static_url_path='')
 
@@ -17,7 +19,7 @@ sess.init_app(app)
 
 @app.route('/')
 def home():
-    return 'homepage'
+    return redirect('/login')
 
 
 @app.route('/selectProd',methods=['GET','POST'])
@@ -117,49 +119,173 @@ def send_static(path):
 
 @app.route('/main_menu',methods=['GET','POST'])
 def main_menu():
-    print(session.get('user'))
-    return render_template('main_menu.html')
-
+    if userType() != False:    
+        print(session.get('user'))
+        return render_template('main_menu.html',me = session.get('user'))
+    else:
+        return redirect('/login')
+    
 @app.route('/users',methods=['GET','POST'])
 def list():
-    print(request.args.get('id'))
-    u = users()
-    if request.args.get('task') == 'delete':
-        u.deleteById(request.args.get('id'))
-    if request.args.get('task') == 'add':
-        d = {}
-        d['fname'] = request.form.get('fname')
-        d['lname'] = request.form.get('lname')
-        d['email'] = request.form.get('email')
-        d['pw'] = request.form.get('pw')
-        d['type'] = request.form.get('type')
-        d['age'] = request.form.get('age')
-        d['gender'] = request.form.get('gender')
-        
-        
-        u.add(d)
-        u.insert()
-    if request.args.get('task') == 'update':
-        u.getById(request.args.get('id'))
-        u.data[0]['fname'] = request.form.get('fname')
-        u.data[0]['lname'] = request.form.get('lname')
-        u.data[0]['email'] = request.form.get('email')
-        u.data[0]['age'] = request.form.get('age')
-        u.data[0]['gender'] = request.form.get('gender')
-        u.update()
-    if request.args.get('id') is not None and request.args.get('task') is None:
-        if request.args.get('id') == 'add':
-            return render_template('users/add.html',object = u.data)
-        else:
-            u.getById(request.args.get('id'))
+    if userType() != False: 
+        print(request.args.get('id'))
+        u = users()
+        if request.args.get('task') == 'delete':
+            u.deleteById(request.args.get('id'))
+        if request.args.get('task') == 'add':
+            d = {}
+            d['fname'] = request.form.get('fname')
+            d['lname'] = request.form.get('lname')
+            d['email'] = request.form.get('email')
+            d['pw'] = request.form.get('pw')
+            d['type'] = request.form.get('type')
+            d['age'] = request.form.get('age')
+            d['gender'] = request.form.get('gender')
+            u.add(d)
             print(u.data)
-            return render_template('users/edit.html',object = u.data)
+            if u.verify_new():
+                print(u.data)
+                u.insert()
+            else:
+                print(u.errors)
+                return render_template('users/add.html',object = u)
+            
+        if request.args.get('task') == 'update':
+            u.getById(request.args.get('id'))
+            u.data[0]['fname'] = request.form.get('fname')
+            u.data[0]['lname'] = request.form.get('lname')
+            u.data[0]['email'] = request.form.get('email')
+            u.data[0]['type'] = request.form.get('type')
+            u.data[0]['age'] = request.form.get(age)
+            u.data[0]['gender'] = request.form.get('gender')
+            if u.verify_update():
+                u.update()
+            else:
+                return render_template('users/edit.html',object = u)
+            
+        if request.args.get('id') is not None and request.args.get('task') is None:
+            if request.args.get('id') == 'add':
+                u.create_blank()
+                return render_template('users/add.html',object = u)
+            else:
+                u.getById(request.args.get('id'))
+                print(u.data)
+                return render_template('users/edit.html',object = u)
+        else:
+            u.getAll()
+            #print(u.data)
+            return render_template('users/list.html',table = u)
     else:
-        u.getAll()
-        #print(u.data)
-        return render_template('users/list.html',table = u.data)
+        return redirect('/login')
 
-
+def userType():
+    if session.get('user') is None:
+        return False
+    else:
+        return session.get('user')['type']
+        
+@app.route('/products',methods=['GET','POST'])
+def Productlist():
+    if userType() != False: 
+        print(request.args.get('ProductId'))
+        o = products()
+        if request.args.get('task') == 'delete':
+            o.deleteById(request.args.get('ProductId'))
+        if request.args.get('task') == 'add':
+            d = {}
+            d['PType'] = request.form.get('PType')
+            d['PColor'] = request.form.get('PColor')
+            d['PSize'] = request.form.get('PSize')
+            d['PBrand'] = request.form.get('PBrand')
+            d['PPrice'] = request.form.get('PPrice')
+            d['PName'] = request.form.get('PName')
+            
+            o.add(d)
+            print(o.data)
+            if o.verify_new():
+                print(o.data)
+                o.insert()
+            else:
+                print(o.errors)
+                return render_template('products/add.html',object = o)
+            
+        if request.args.get('task') == 'update':
+            o.getById(request.args.get('ProductId'))
+            o.data[0]['PType'] = request.form.get('PType')
+            o.data[0]['PColor'] = request.form.get('PColor')
+            o.data[0]['PSize'] = request.form.get('PSize')
+            o.data[0]['PBrand'] = request.form.get('PBrand')
+            o.data[0]['PPrice'] = request.form.get('PPrice')
+            o.data[0]['PName'] = request.form.get('PName')
+            if o.verify_update():
+                o.update()
+            else:
+                return render_template('products/edit.html',object = o)
+            
+        if request.args.get('ProductId') is not None and request.args.get('task') is None:
+            if request.args.get('ProductId') == 'add':
+                o.create_blank()
+                return render_template('products/add.html',object = o)
+            else:
+                o.getById(request.args.get('ProductId'))
+                print(o.data)
+                return render_template('products/edit.html',object = o)
+        else:
+            o.getAll()
+            #print(o.data)
+            return render_template('products/list.html',table = o)
+    else:
+        return redirect('/login')
+        
+'''@app.route('/transactions',methods=['GET','POST'])
+def transactionslist():
+    if userType() != False: 
+        print(request.args.get('TId'))
+        o = transactions()
+        if request.args.get('task') == 'delete':
+            o.deleteById(request.args.get('TId'))
+        if request.args.get('task') == 'add':
+            d = {}
+            d['Amount'] = request.form.get('Amount')
+            d['Tdate'] = request.form.get('Tdate')
+            d['Tstatus'] = request.form.get('Tstatus')
+            d['Paymenttype'] = request.form.get('Paymenttype')
+            o.add(d)
+            print(o.data)
+            if o.verify_new():
+                print(o.data)
+                o.insert()
+            else:
+                print(o.errors)
+                return render_template('transactions/add.html',object = o)
+            
+        if request.args.get('task') == 'update':
+            o.getById(request.args.get('TId'))
+            o.data[0]['Amount'] = request.form.get('Amount')
+            o.data[0]['Tdate'] = request.form.get('Tdate')
+            o.data[0]['Tstatus'] = request.form.get(Tstatus)
+            o.data[0]['Paymenttype'] = request.form.get(Paymenttype)
+            if o.verify_update():
+                o.update()
+            else:
+                return render_template('transactions/edit.html',object = o)
+            
+        if request.args.get('TId') is not None and request.args.get('task') is None:
+            if request.args.get('TId') == 'add':
+                o.create_blank()
+                return render_template('transactions/add.html',object = o)
+            else:
+                o.getById(request.args.get('TId'))
+                print(o.data)
+                return render_template('transactions/edit.html',object = o)
+        else:
+            o.getAll()
+            #print(o.data)
+            return render_template('transactions/list.html',table = o)
+    else:
+        return redirect('/login')'''
+        
+        
 
 
 

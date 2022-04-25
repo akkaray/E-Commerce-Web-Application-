@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <div>
+				{{ object.data[0].ProductId }}
+			{% for error in object.errors %}
+			{{ error }}<br/>
+		{% endfor %}
+
+				
+		<form action='/products?task=update&ProductId={{ object.data[0].ProductId }}' method='post'>
+			Color:<input type='text' name='PColor' value= '{{ object.data[0].PColor }}' /> <br/>
+			Size:<input type='text' name='PSize' value= '{{ object.data[0].PSize }}' /> <br/>
+			Brand:<input type='text' name='PBrand' value= '{{ object.data[0].PBrand }}' /> <br/>
+			Name:<input type='text' name='PName' value= '{{ object.data[0].PName }}' /> <br/>
+			Price:<input type='text' name='PPrice'/> <br/>
+			Retype-price:<input type='text' name='PPrice'/> <br/>
+		  
+		  Type: 
+          <select name='PType'>
+		  <option
+		  {%if object.data[0].type == 'Tshirts' %}
+			 selected = 'true' 
+          {% endif %}
+		  value = 'Tshirts'> Tshirts </option>
+		  <option
+		  {%if object.data[0].type == 'Pants' %}
+			 selected = 'true' 
+		  {% endif %}
+		  value = 'Pants'> Pants </option>
+		  <option
+		  {%if object.data[0].type == 'Dresses' %}
+			 selected = 'true' 
+          {% endif %}
+		  value = 'Dresses'> Dresses </option>
+          </select> <br/>
+		  <input type='submit' value = 'save'/>
+		 
+        </form>
+			</div>
+{% endblock %}

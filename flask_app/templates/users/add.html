@@ -1,20 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-            <div>
-			
-      <form action='/users?task=add' method='post'>
-          First Name:<input type='text' name='fname' /> <br/>
-          Last Name:<input type='text' name='lname' /> <br/>
-          Email:<input type='text' name='email' /> <br/>
-          Password:<input type='password' name='pw' /> <br/>
-          Type: 
-          <select name='type'>
-          <option value = 'customer'> Customter </option>
-           <option value = 'employee'> Employee </option>
-
-           </select> <br/>
-          <input type='submit' value = 'save'/>
-        </form>
+			<div>
+		{% for error in object.errors %}
+			{{ error }}<br/>
+		{% endfor %}
+		<form action='/users?task=add' method='post'>
+			First Name:<input type='text' name='fname' value= '{{ object.data[0].fname }}' /> <br/>
+			Last Name:<input type='text' name='lname' value= '{{ object.data[0].lname }}' /> <br/>
+			Email:<input type='text' name='email' value= '{{ object.data[0].email }}' /> <br/>
+			Age:<input type='text' name='age' value= '{{ object.data[0].age }}' /> <br/>
+			Gender:<input type='text' name='gender' value= '{{ object.data[0].gender }}' /> <br/>
+			Password:<input type='password' name='pw'/> <br/>
+			Type: 
+			<select name='type'>
+			<option
+			{%if object.data[0].type == 'customer' %}
+				selected = 'true' 
+			{% endif %}
+			value = 'customer'> Customer </option>
+			<option
+			{%if object.data[0].type == 'employee' %}
+				selected = 'true' 
+			{% endif %}
+			value = 'employee'> Employee </option>
+			</select> <br/>
+			<input type='submit' value = 'save'/>
+		</form>
 			</div>
 {% endblock %}

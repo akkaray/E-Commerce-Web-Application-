@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <div>
+				
+				<a href="transactions?TId=add">addProducts</a><br>
+				{% for row in table.data %}
+				<a href="transactions?TId={{ row.TId }}">{{ row.TId }}</a> 
+				<a href="transactions?task=delete&TId={{ row.TId }}">delete</a><br>
+				{% endfor %}
+			</div>
+{% endblock %}

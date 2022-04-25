@@ -1,0 +1,30 @@
+CREATE TABLE RW_FitnessProgram
+(
+  
+  id INT NOT NULL AUTO_INCREMENT,
+  ProgramID INT NOT NULL ,
+  ProgramName VARCHAR(50) NOT NULL,
+  ProgramDescription DATE NOT NULL,
+  ProgramType VARCHAR(50) NOT NULL,
+  ProgramStartDate DATE NOT NULL,
+  ProgramEndDate DATE NOT NULL,
+  ProgramLocation VARCHAR(50) NOT NULL,
+  ServiceType VARCHAR (50) 	NOT NULL,
+  PRIMARY KEY (id)
+ 
+)ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33;
+
+
+CREATE TABLE RW_TrainerBiography
+(
+  id INT NOT NULL  AUTO_INCREMENT,
+  TrainerID INT NOT NULL,	
+  Education VARCHAR(50) NOT NULL,
+  ProgramCompleted VARCHAR(50) NOT NULL,
+  YearsOfExprience INT NOT NULL,
+  TrainersSpeciality VARCHAR(50) NOT NULL,
+  EntryType INT NOT NULL,
+  
+  PRIMARY KEY (ID)
+ 
+)ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;

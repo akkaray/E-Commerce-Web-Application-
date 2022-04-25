@@ -10,6 +10,7 @@ class base():
         self.cur = None
         self.pk = None
         self.getFields()
+        self.errors=[]
     def connect(self):
 
         self.conn = pymysql.connect(host = mysecrets.host, port = 3306, user = mysecrets.user,
@@ -35,6 +36,12 @@ class base():
 
     def add(self, d):
         self.data.append(d)
+        
+    def create_blank(self):
+        d={}
+        for field in self.fields:
+            d[field]=''
+        self.add(d)
 
     def insert(self,n=0):
         sql = f'INSERT INTO {self.tn} ('
@@ -52,6 +59,7 @@ class base():
         sql += f'({vals});'
         #print(sql,value_list)
         self.cur.execute(sql, value_list)
+        self.data[n][self.pk]=self.cur.lastrowid
     def getAll(self):
         sql = f"SELECT * FROM `{self.tn}` "
         self.cur.execute(sql)
@@ -83,5 +91,5 @@ class base():
     def deleteById(self,id):
         self.connect()
         sql = f"DELETE FROM `{self.tn}` WHERE `{self.pk}` = %s;"
-        #print(sql)
+        print(sql,id)
         self.cur.execute(sql,(id))

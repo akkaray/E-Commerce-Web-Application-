@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <div>
+				
+				<a href="addresses?id=add"> Add Address </a><br>
+				{% for row in table.data %}
+				<a href="addresses?id={{ row.id }}"> {{ row.street }} {{ row.city }} {{ row.state }} {{row.email}}</a>              
+				<a href="addresses?task=delete&id={{ row.id }}">delete</a><br>
+				{% endfor %}
+			</div>
+{% endblock %}
