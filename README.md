@@ -19,12 +19,12 @@
     <tr>
         <td>abc@gmail.com</td>
         <td>123</td>
-        <td>employee</td>
+        <td>customer</td>
     </tr>
     <tr>
         <td>jim@sur.com	</td>
         <td>1234</td>
-        <td>customer</td>
+        <td>employee</td>
     </tr>
 	</table>
 	
