@@ -4,6 +4,7 @@ class users(base):
         self.setup('AY_Users')
 
     def trylogin(self, username, passwd):
+        print(username,passwd)
         sql = f"SELECT * FROM `{self.tn}` WHERE `email` = %s AND `pw`= %s;"
         self.cur.execute(sql,(username, passwd))
         self.data = []

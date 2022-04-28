@@ -1,17 +1,24 @@
-{% extends "base.html" %}
+<html>
+    <head>
+      
+      
 
-{% block content %}
-            <div>
+	  <link rel="stylesheet" href="productbackground.css" />
+	  </head>
+		<body>
+            <div class="bg-img">
 				
-				<a href="products?ProductId=add">addProducts</a><br>
-				
+				<h1> PRODUCTS</h1>
 				{% for row in table.data %}
 				<a href="products?ProductId={{ row.ProductId }}">{{ row.PName }}</a> 
 				<a href="products?ProductId={{ row.ProductId }}">{{ row.PPrice }}</a> 
 				<a href="products?ProductId={{ row.ProductId }}">{{ row.PSize }}</a> 
 				<a href="products?ProductId={{ row.ProductId }}">{{ row.PBrand }}</a>
 				<a href="products?ProductId={{ row.ProductId }}">{{ image_list }}</a>
-				<a href="products?task=delete&ProductId={{ row.ProductId }}">delete</a><br>
+				<a href="lineitems?lineitemId=add">Add to Cart</a><br>
+				</br>
 				{% endfor %}
 			</div>
-{% endblock %}
+		</body>
+</html>
+

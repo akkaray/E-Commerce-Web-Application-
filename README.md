@@ -31,6 +31,16 @@
 
 ![RelationalSchema](Documentation/SchemaLatest.png)
 
+	#SQL Queries:
+			--Used in Transaction.py--
+	SELECT * FROM AY_Transactions where Tstatus=%s AND CID=%s
+	
+	Get an open transaction for the current customer,Tstatus=%s is for the value Open and CID=%s is to get the current customer
+				  
+				  
+			--Used in Line_Items.py--		  
+	SELECT * FROM AY_Line_items 
+        left join AY_Products on AY_Products.ProductId=AY_Line_items.ProductId where TId=%s 
 
-
+	Get all the line items for specific Transaction ID where product id is same in both the Products and Line items table
  

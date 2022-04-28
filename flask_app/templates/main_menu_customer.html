@@ -1,15 +1,34 @@
-{% extends "base.html" %}
+<html>
+    <head>
+      
+      <title>Mainmenu</title>
 
-{% block content %}
-            <div>
-				{{ me.email }} {{ me.id }}<br/>
-				<a href="logout">Logout</a><br>
-
-				
-				<a href="products"> Products </a><br>
-				<a href="addresses"> Manage Addresses </a><br>
-				
-				<a href="all_addresses"> Show Users Address </a><br>
-
-			</div>
-{% endblock %}
+	  <link rel="stylesheet" href="mainmenu.css" />
+	  
+    </head>
+    <body>
+		<div class="bg-img" >
+			
+				<div class="topnav" id="myTopnav">
+				<div class="dropdown">
+					<button class="dropbtn">Home 
+					  <i class="fa fa-caret-down"></i>
+					</button>
+					<div class="dropdown-content">
+					  <a  href="logout">Logout</a>
+					  <a href="products"> View Products </a>
+					  
+					</div>
+				 </div> 
+				  <a href="#news">News</a>
+				  <a href="#contact">Contact</a>
+				  <a href="#about">About</a>
+				  <div class="search-container">
+					  <input type="text" placeholder="Search.." name="search">
+					  <button type="submit">Submit</button>
+				  </div>
+				</div>
+			
+		</div>
+    </body>
+</html>

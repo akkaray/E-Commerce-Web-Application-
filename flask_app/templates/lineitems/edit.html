@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <div>
+				{{ object.data[0].lineitemId }}
+			{% for error in object.errors %}
+			{{ error }}<br/>
+		{% endfor %}
+
+				
+      <form action='/lineitems?task=update&lineitemId={{ object.data[0].lineitemId }}' method='post'>
+		  Quantity: 
+			<select name='Quantity'>
+			<option
+			{%if object.data[0].type == '1' %}
+				selected = 'true' 
+			{% endif %}
+			value = '1'> 1 </option>
+			<option
+			{%if object.data[0].type == '2' %}
+				selected = 'true' 
+			{% endif %}
+			value = '2'> 2 </option>
+			</select> <br/>
+			<input type='submit' value = 'save'/>
+		 
+        </form>
+			</div>
+{% endblock %}

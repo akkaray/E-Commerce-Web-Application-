@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+				
+			<div class="bg-img">
+				<h1> YOUR SHOPPING CART</h1>
+		{% for error in object.errors %}
+			{{ error }}<br/>
+		{% endfor %}
+		<form action='/lineitems?task=add' method='post'>
+			
+			
+			Quantity: 
+			<select name='Quantity'>
+			<option
+			{%if object.data[0].type == '1' %}
+				selected = 'true' 
+			{% endif %}
+			value = '1'> 1 </option>
+			<option
+			{%if object.data[0].type == '2' %}
+				selected = 'true' 
+			{% endif %}
+			value = '2'> 2 </option>
+			</select> <br/>
+			ProductId: 
+				<select name='ProductId'>
+				{% for product in object.products %}
+				  <option
+			  {%if object.data[0].ProductId == product.ProductId %}
+				 selected = 'true' 
+			  {% endif %}
+			  value = '{{ product.ProductId }}'> {{ product.PName}} {{ product.PPrice}} </option>
+			  
+			 {% endfor %}
+			 
+			
+			<input type='submit' value = 'save'/>
+		</form>
+			</div>
+{% endblock %}

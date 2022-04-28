@@ -1,0 +1,28 @@
+<html>
+    <head>
+      
+      <title>Viewproducts</title>
+
+	  <link rel="stylesheet" href="baseproductcard.css" />
+	  
+    </head>
+    <body>
+	<form action='/products?task=view' method='post'>
+		<div class="card">
+			<img src="login.jpg" alt="Denim Jeans" style="width:100%">
+			<h1>Products</h1>
+			<a href="products?ProductId=view">ViewProducts</a><br>
+			{% for row in table.data %}
+			<a href="products?ProductId={{ row.ProductId }}">{{ row.PName }}</a> 
+			<p class="price">{{ row.PPrice }}</p>
+			<p><button>Add to Cart</button></p>
+			{% endfor %}
+	
+		</div>
+	</form>
+	</body>
+</html>
+            
+
+
+

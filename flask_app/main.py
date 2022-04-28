@@ -7,6 +7,10 @@ import time
 from users import users
 from products import products
 from transactions import transactions
+from lineitems import lineitems
+from PIL import Image
+import os
+from glob import glob
 
 app = Flask(__name__,static_url_path='')
 
@@ -62,7 +66,7 @@ def login():
     msg = 'Welcome'
     if request.form.get('username') is not None:
         u=users()
-        if u.trylogin(request.form.get('username'), request.form.get('password')):
+        if u.trylogin(request.form.get('username'), request.form.get('pw')):
             session['user'] = u.data[0]
             session['last_login'] = time.time()
             return redirect('/main_menu')
@@ -119,11 +123,21 @@ def send_static(path):
 
 @app.route('/main_menu',methods=['GET','POST'])
 def main_menu():
-    if userType() != False:    
-        print(session.get('user'))
-        return render_template('main_menu.html',me = session.get('user'))
+    u=users()
+    if userType() == "employee":
+        if userType() != False:    
+            print(session.get('user'))
+            return render_template('main_menu.html',me = session.get('user'))
+        else:
+            return redirect('/login')
     else:
-        return redirect('/login')
+        if userType() != False:    
+            print(session.get('user'))
+            return render_template('main_menu_customer.html',me = session.get('user'))
+        else:
+            return redirect('/login')
+    
+    
     
 @app.route('/users',methods=['GET','POST'])
 def list():
@@ -186,8 +200,14 @@ def userType():
         
 @app.route('/products',methods=['GET','POST'])
 def Productlist():
-    if userType() != False: 
+    image_list = []
+    directory = 'C:/Users/yasha/OneDrive/Documents/GitHub/Ashley-and-Yash-final-project/flask_app/productpictures'
+    for filename in os.listdir(directory):
+        image_list.append(filename)
+    print(image_list)
+    if userType() != False and userType()=='employee': 
         print(request.args.get('ProductId'))
+
         o = products()
         if request.args.get('task') == 'delete':
             o.deleteById(request.args.get('ProductId'))
@@ -199,6 +219,7 @@ def Productlist():
             d['PBrand'] = request.form.get('PBrand')
             d['PPrice'] = request.form.get('PPrice')
             d['PName'] = request.form.get('PName')
+            d['img'] = request.form.get('img')
             
             o.add(d)
             print(o.data)
@@ -217,10 +238,14 @@ def Productlist():
             o.data[0]['PBrand'] = request.form.get('PBrand')
             o.data[0]['PPrice'] = request.form.get('PPrice')
             o.data[0]['PName'] = request.form.get('PName')
+            o.data[0]['img'] = request.form.get('img')
             if o.verify_update():
                 o.update()
             else:
                 return render_template('products/edit.html',object = o)
+        if request.args.get('task') == 'view':
+            o.getAll(request.args.get('ProductId'))
+            return render_template('products/view.html',table = o)
             
         if request.args.get('ProductId') is not None and request.args.get('task') is None:
             if request.args.get('ProductId') == 'add':
@@ -231,63 +256,99 @@ def Productlist():
                 print(o.data)
                 return render_template('products/edit.html',object = o)
         else:
+            
             o.getAll()
             #print(o.data)
-            return render_template('products/list.html',table = o)
+            return render_template('products/listemployee.html',table = o)
     else:
-        return redirect('/login')
+        o=products()
+        o.getAll()
+            #print(o.data)
+        return render_template('products/listcustomer.html',table = o)
         
-'''@app.route('/transactions',methods=['GET','POST'])
+        
+@app.route('/transactions',methods=['GET','POST'])
 def transactionslist():
     if userType() != False: 
         print(request.args.get('TId'))
         o = transactions()
+        o.getopenTId()
+        
+    else:
+        return redirect('/login')   
+        
+@app.route('/lineitems',methods=['GET','POST'])
+def lineitemslist():
+    if userType() != False: 
+        print(request.args.get('lineitemId'))
+        t=transactions()
+        TId =t.getopenTId(session.get('user')['id'])
+        o = lineitems()
+        p=products()
+        p.getAll()
+        o.products=p.data
         if request.args.get('task') == 'delete':
-            o.deleteById(request.args.get('TId'))
+            o.deleteById(request.args.get('lineitemId'))
         if request.args.get('task') == 'add':
             d = {}
-            d['Amount'] = request.form.get('Amount')
-            d['Tdate'] = request.form.get('Tdate')
-            d['Tstatus'] = request.form.get('Tstatus')
-            d['Paymenttype'] = request.form.get('Paymenttype')
+            d['Quantity'] = request.form.get('Quantity')
+            d['ProductId'] = request.form.get('ProductId')
+            d['TId'] = TId
             o.add(d)
             print(o.data)
-            if o.verify_new():
-                print(o.data)
-                o.insert()
-            else:
-                print(o.errors)
-                return render_template('transactions/add.html',object = o)
             
+            o.insert()
+               
         if request.args.get('task') == 'update':
-            o.getById(request.args.get('TId'))
-            o.data[0]['Amount'] = request.form.get('Amount')
-            o.data[0]['Tdate'] = request.form.get('Tdate')
-            o.data[0]['Tstatus'] = request.form.get(Tstatus)
-            o.data[0]['Paymenttype'] = request.form.get(Paymenttype)
+            o.getById(request.args.get('lineitemId'))
+            o.data[0]['Quantity'] = request.form.get('Quantity')
+            o.data[0]['TId'] = TId
+            
             if o.verify_update():
                 o.update()
             else:
-                return render_template('transactions/edit.html',object = o)
+                return render_template('lineitems/edit.html',object = o)
             
-        if request.args.get('TId') is not None and request.args.get('task') is None:
-            if request.args.get('TId') == 'add':
+        if request.args.get('lineitemId') is not None and request.args.get('task') is None:
+            if request.args.get('lineitemId') == 'add':
                 o.create_blank()
-                return render_template('transactions/add.html',object = o)
+                return render_template('lineitems/add.html',object = o)
             else:
-                o.getById(request.args.get('TId'))
+                o.getById(request.args.get('lineitemId'))
                 print(o.data)
-                return render_template('transactions/edit.html',object = o)
+                return render_template('lineitems/edit.html',object = o)
         else:
-            o.getAll()
+            o.getTId(TId)
             #print(o.data)
-            return render_template('transactions/list.html',table = o)
+            return render_template('lineitems/list.html',table = o)
     else:
-        return redirect('/login')'''
+        return redirect('/login')
         
+@app.route('/checkout',methods=['GET','POST'])
+def checkoutlist():
+    if userType() != False: 
+        print(request.args.get('lineitemId'))
+        t=transactions()
+        TId =t.getopenTId(session.get('user')['id'])
+        l=lineitems()
+        l.getTId(TId)
+        print(l.data)
+        total=l.getTotal()
+        print(total)
+        if request.args.get('task')=='confirm':
+            t.getById(TId)
+            #t.data[0]['Tstatus']='placed'
+            t.data[0]['Paymenttype']=request.form.get('type')
+            t.data[0]['Amount']=total
+            t.update()
+            l.transactions=t.data
+            return render_template('checkout/checkoutcomplete.html',object = l)
+        return render_template('checkout/edit.html',object = l,filename = 'Login3.jpg')
+            
         
-
-
+    else:
+        return redirect('/login')
+         
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1',debug=True)

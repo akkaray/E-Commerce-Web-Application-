@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <div class="bg-img">
+			<h1> Checkout</h1>
+				{{ object.data[0].id }}
+				
+      <form action='/checkout?task=confirm' method='post'>
+			{% for item in object.data %}
+			{{ item.PName }} 
+			{{ item.PPrice }}
+			{{ item.Amount }}
+			{{ item.Quantity }}<br/>
+			{% endfor %}
+		  Type: 
+          <select name='type'>
+		  <option
+		  {%if object.data[0].type == 'credit' %}
+			 selected = 'true' 
+          {% endif %}
+		  value = 'credit'> credit </option>
+		  <option
+		  {%if object.data[0].type == 'debit' %}
+			 selected = 'true' 
+          {% endif %}
+		  value = 'debit'> debit </option>
+          </select> <br/>
+		  
+		 <input type="submit" value="Place my order"/>
+        </form>
+			</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <div>
+				<div class="bg-img">
+				
+				<h1>YOUR SHOPPING CART</h1>
+				
+				{% for row in table.data %}
+				<a href="lineitems?lineitemId={{ row.lineitemId }}">{{ row.PName }}</a> 
+				<a href="lineitems?lineitemId={{ row.lineitemId }}">{{ row.Quantity }}</a> 				
+				<a href="lineitems?task=delete&lineitemId={{ row.lineitemId }}">delete</a><br>
+				{% endfor %}
+				<a href="lineitems?lineitemId=add">Add to Cart</a><br>
+				<a href="checkout">Checkout</a><br>
+				</div>
+			</div>
+{% endblock %}

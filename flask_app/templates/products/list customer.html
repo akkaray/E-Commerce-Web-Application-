@@ -3,7 +3,7 @@
 {% block content %}
             <div>
 				
-				<a href="products?ProductId=add">addProducts</a><br>
+				
 				
 				{% for row in table.data %}
 				<a href="products?ProductId={{ row.ProductId }}">{{ row.PName }}</a> 
@@ -11,7 +11,7 @@
 				<a href="products?ProductId={{ row.ProductId }}">{{ row.PSize }}</a> 
 				<a href="products?ProductId={{ row.ProductId }}">{{ row.PBrand }}</a>
 				<a href="products?ProductId={{ row.ProductId }}">{{ image_list }}</a>
-				<a href="products?task=delete&ProductId={{ row.ProductId }}">delete</a><br>
+				
 				{% endfor %}
 			</div>
 {% endblock %}

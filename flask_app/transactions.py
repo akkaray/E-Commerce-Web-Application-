@@ -22,7 +22,7 @@ class transactions(base):
  
  
     def getopenTId(self,cid):
-        sql = f'''SELECT * FROM AY_Transactions
+        sql = '''SELECT * FROM AY_Transactions
                   where Tstatus=%s AND CID=%s'''
         self.cur.execute(sql,('open',cid))
         self.data = []
@@ -32,7 +32,7 @@ class transactions(base):
             d = {}
             d['Amount'] = 0
             d['Tdate'] = ''
-            d['Tstatus'] = 'Open'
+            d['Tstatus'] = 'open'
             d['Paymenttype'] = ''
             d['CID'] = cid
             self.add(d)
