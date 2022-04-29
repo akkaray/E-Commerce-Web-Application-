@@ -7,10 +7,10 @@
 				
       <form action='/checkout?task=confirm' method='post'>
 			{% for item in object.data %}
-			{{ item.PName }} 
-			{{ item.PPrice }}
-			{{ item.Amount }}
-			{{ item.Quantity }}<br/>
+			<img style='width:200px' src='static/{{ item.img }}'/><br/>
+			{{ item.PName }} <br/>
+			Price:{{ item.PPrice }}<br/>
+			Quantity:{{ item.Quantity }}<br/>
 			{% endfor %}
 		  Type: 
           <select name='type'>
@@ -27,6 +27,8 @@
           </select> <br/>
 		  
 		 <input type="submit" value="Place my order"/>
+		 
+
         </form>
 			</div>
 {% endblock %}

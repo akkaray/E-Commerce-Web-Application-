@@ -7,6 +7,7 @@
 				<h1>YOUR SHOPPING CART</h1>
 				
 				{% for row in table.data %}
+				<img style='width:200px' src='static/{{ row.img }}'/>
 				<a href="lineitems?lineitemId={{ row.lineitemId }}">{{ row.PName }}</a> 
 				<a href="lineitems?lineitemId={{ row.lineitemId }}">{{ row.Quantity }}</a> 				
 				<a href="lineitems?task=delete&lineitemId={{ row.lineitemId }}">delete</a><br>

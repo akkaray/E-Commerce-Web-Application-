@@ -1,15 +1,16 @@
-{% extends "base.html" %}
+<html>
+    <head>
 
-{% block content %}
+	  <link rel="stylesheet" href="Checkout.css" />
+	  
+    </head>
+    <body>
             <div class="bg-img">
-			{% for item in object.data %}
-			{{ item.PName }} 
-			{{ item.PPrice }}
-			{{ item.Amount }}
-			{{ item.Quantity }}<br/>
-			{% endfor %}
-				
-			{{ object.transactions[0]['Amount'] }}
-		
+			
+				<h2 style="font-family:Lucida Handwriting" align="center" >Thanks for shopping with us .</h2>
+			
 			</div>
-{% endblock %}
+			
+    </body>
+</html>
+

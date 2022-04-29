@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <div class="bg-img">
+			{% for item in object.data %}
+			<img style='width:200px' src='static/{{ item.img }}'/><br/>
+			{{ item.PName }}<br/>
+			Price:{{ item.PPrice }}<br/>
+			Quantity:{{ item.Quantity }}<br/>
+			{% endfor %}<br/>
+				
+			
+			Total Amount:{{ object.transactions[0]['Amount'] }}<br/>
+			
+			<a href="checkoutcomplete?task=complete">Complete Checkout</a><br>
+		
+			</div>
+{% endblock %}

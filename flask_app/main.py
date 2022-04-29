@@ -200,11 +200,6 @@ def userType():
         
 @app.route('/products',methods=['GET','POST'])
 def Productlist():
-    image_list = []
-    directory = 'C:/Users/yasha/OneDrive/Documents/GitHub/Ashley-and-Yash-final-project/flask_app/productpictures'
-    for filename in os.listdir(directory):
-        image_list.append(filename)
-    print(image_list)
     if userType() != False and userType()=='employee': 
         print(request.args.get('ProductId'))
 
@@ -337,18 +332,25 @@ def checkoutlist():
         print(total)
         if request.args.get('task')=='confirm':
             t.getById(TId)
-            #t.data[0]['Tstatus']='placed'
+            t.data[0]['Tstatus']='placed'
             t.data[0]['Paymenttype']=request.form.get('type')
             t.data[0]['Amount']=total
             t.update()
             l.transactions=t.data
-            return render_template('checkout/checkoutcomplete.html',object = l)
-        return render_template('checkout/edit.html',object = l,filename = 'Login3.jpg')
-            
+            return render_template('checkout/checkout.html',object = l) 
+        return render_template('checkout/edit.html',object = l)
         
     else:
         return redirect('/login')
          
+         
+         
+@app.route('/checkoutcomplete',methods=['GET','POST'])
+def checkout():
+    if request.args.get('task')=='complete': 
+            return render_template('checkout/checkoutcomplete.html')
+    
+    
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1',debug=True)

@@ -26,6 +26,7 @@
 			ProductId: 
 				<select name='ProductId'>
 				{% for product in object.products %}
+				<img style='width:200px' src='static/{{ product.img }}'/>
 				  <option
 			  {%if object.data[0].ProductId == product.ProductId %}
 				 selected = 'true' 
