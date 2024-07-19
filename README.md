@@ -1,6 +1,6 @@
 	#E-Commerce Web Application
 <ol>
-  <li>Ashely,Yashaswini</li>
+  <li>Yashaswini</li>
   <li>Narration:An e-commerce application to purchase clothing</li>
   <li>Describe your user types</li>
 	<ol>
