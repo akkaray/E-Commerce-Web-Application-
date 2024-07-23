@@ -1,45 +1,110 @@
-	#E-Commerce Web Application
-<ol>
-  <li>Yashaswini</li>
-  <li>Narration:An e-commerce application to purchase clothing</li>
-  <li>Describe your user types</li>
-	<ol>
-		<li>Customer</li>
-		<li>Customer use cases:Searches for clothing,add to cart and check out</li>
-		<li>Employee</li>
-		<li>Employee use cases:Add or delete a product, Can change the price for clothing</li>
-	</ol>
-	<table>
-    <tr>
-        <th>username</th>
-        <th>password</th>
-        <th>type</th>
-    </tr>
-    <tr>
-        <td>abc@gmail.com</td>
-        <td>123</td>
-        <td>customer</td>
-    </tr>
-    <tr>
-        <td>jim@sur.com	</td>
-        <td>1234</td>
-        <td>employee</td>
-    </tr>
-	</table>
+# E-Commerce Application for Purchasing Clothing
+ ## Project Overview:
 	
+This project is an e-commerce application designed to facilitate the purchase of clothing. It allows users to search for clothing items, add them to a cart, and proceed to checkout. Additionally, employees have the ability to manage the product inventory by adding or deleting products and adjusting prices.
+	
+## User Types-
+
+## Customer
+### Use Cases:
+
+**Search for Clothing:** Customers can browse through the available clothing items by applying various filters and search criteria.
+
+**Add to Cart:** Customers can add desired clothing items to their shopping cart.
+
+**Checkout:** Customers can proceed to checkout to complete their purchase.
+
+ ### Customer Credentials:
+
+**Username:** abc@gmail.com
+
+**Password:** 123
+
+**Type:** customer
+
+## Employee
+### Use Cases:
+
+**Add or Delete a Product:** Employees can manage the product inventory by adding new products or removing existing ones.
+
+**Change the Price for Clothing:** Employees can update the prices of clothing items.
+
+### Employee Credentials:
+
+**Username:** jim@sur.com
+
+**Password:** 1234
+
+**Type:** employee
+
+## Relational Schema
+The relational schema of the database is illustrated in the attached image (SchemaLatest.png). The database consists of the following tables:
+
+### Users
+id: Primary Key
+lname: Last Name
+fname: First Name
+email: Email
+pw: Password
+gender: Gender
+age: Age
+type: User Type (customer or employee)
+### Transactions
+TId: Primary Key
+Amount: Transaction Amount
+Tdate: Transaction Date
+Tstatus: Transaction Status
+Paymenttype: Payment Type
+CID: Customer ID (Foreign Key)
+### Line_Items
+Line_ItemId: Primary Key
+Quantity: Quantity of Items
+TId: Transaction ID (Foreign Key)
+ProductId: Product ID (Foreign Key)
+### Products
+ProductId: Primary Key
+PType: Product Type
+PColor: Product Color
+PSize: Product Size
+PBrand: Product Brand
+PPrice: Product Price
+PName: Product Name
+img: Product Image
+ 
 
 ![RelationalSchema](Documentation/SchemaLatest.png)
 
-	#SQL Queries:
-			--Used in Transaction.py--
-	SELECT * FROM AY_Transactions where Tstatus=%s AND CID=%s
-	
-	Get an open transaction for the current customer,Tstatus=%s is for the value Open and CID=%s is to get the current customer
-				  
-				  
-			--Used in Line_Items.py--		  
-	SELECT * FROM AY_Line_items 
-        left join AY_Products on AY_Products.ProductId=AY_Line_items.ProductId where TId=%s 
+# SQL Queries
+Below are some SQL queries used in the application:
 
-	Get all the line items for specific Transaction ID where product id is same in both the Products and Line items table
- 
+### Transaction.py
+**sql**
+
+SELECT * FROM AY_Transactions WHERE Tstatus=%s AND CID=%s;
+
+This query retrieves all transactions for a specific customer with a given status. The %s placeholders are for the Tstatus (transaction status) and CID (customer ID).
+
+### Line_Items.py
+**sql**
+
+SELECT * FROM AY_Line_items 
+LEFT JOIN AY_Products ON AY_Products.ProductId=AY_Line_items.ProductId 
+WHERE TId=%s;
+
+This query retrieves all line items for a specific transaction ID, joining the Line_Items and Products tables on the ProductId.
+
+### Note
+Please note that the application login functionality will not work as the university access has expired.
+
+### Conclusion
+This project provides a comprehensive e-commerce platform for purchasing clothing, with distinct functionalities for customers and employees. The relational schema and SQL queries demonstrate the backend structure and data retrieval processes essential for the application's operation.
+
+
+
+
+
+
+
+
+
+
